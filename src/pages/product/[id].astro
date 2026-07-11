@@ -1,0 +1,446 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import categories from '../../data/categories.json';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(product => ({
+    params: { id: product.data.id },
+    props: { product: product.data },
+  }));
+}
+
+const { product } = Astro.props;
+const cat = categories.find(c => c.id === product.category);
+const catName = cat ? cat.name : '';
+let subName = '';
+if (cat && cat.subcategories) {
+  const sub = cat.subcategories.find(s => s.id === product.subcategory);
+  if (sub) subName = sub.name;
+}
+---
+<BaseLayout title={`${product.name} | Twinco`} bodyClass="page-product-detail" solidHeader={true}>
+  <main class="product-detail-page">
+    <nav class="breadcrumb" aria-label="面包屑导航">
+      <a href="/">首页</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="/products">所有商品</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href={`/products?category=${product.category}&sub=${product.subcategory}`}>{catName}</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>{product.name}</span>
+    </nav>
+
+    <div class="detail-layout">
+      <div class="detail-gallery-main">
+        <div class="detail-main-image" id="detailMainImage">
+          {product.defaultImage ? (
+            <img src={product.defaultImage} alt={product.name} id="mainImg" />
+          ) : (
+            <div class="detail-placeholder-img">
+              <span>产品图片</span>
+            </div>
+          )}
+        </div>
+        <div class="detail-thumbs" id="detailThumbs"></div>
+      </div>
+
+      <div class="detail-info">
+        <h1 class="detail-name">{product.name}</h1>
+        {product.subtitle && <p class="detail-subtitle">{product.subtitle}</p>}
+
+        {product.certifications && product.certifications.length > 0 && (
+          <div class="detail-certs">
+            {product.certifications.map(cert => (
+              <span class="cert-badge">{cert}</span>
+            ))}
+          </div>
+        )}
+
+        {product.colors && product.colors.length > 0 && (
+          <div class="detail-color-section">
+            <p class="detail-color-label" id="detailColorLabel">Colours</p>
+            <div class="detail-colors" id="detailColors"></div>
+          </div>
+        )}
+
+        {product.modelFilters && product.modelFilters.length > 0 && product.modelItems && product.modelItems.length > 0 && (
+          <div class="model-filter-section">
+            <div class="model-filter-head">
+              <p class="detail-section-title">筛选产品</p>
+              <button class="model-filter-clear" id="modelFilterClear" type="button" hidden>显示全部</button>
+            </div>
+            <div class="model-filter-toggles" id="modelFilterToggles">
+              {product.modelFilters.map(filter => (
+                <button class="model-filter-btn" type="button" data-filter={filter.key} aria-pressed="false">
+                  <span>{filter.label}</span>
+                </button>
+              ))}
+            </div>
+            <p class="model-filter-summary" id="modelFilterSummary">显示全部型号</p>
+            <div class="model-filter-results" id="modelFilterResults">
+              {product.modelItems.map(item => (
+                <button
+                  class="model-result-card"
+                  type="button"
+                  data-sku={item.sku}
+                  data-tags={item.tags.join(',')}
+                  data-image={item.image || ''}
+                  data-dimensions={item.dimensions || ''}
+                >
+                  {item.image && <img src={item.image} alt={item.title || item.sku} loading="lazy" />}
+                  <span class="model-result-info">
+                    <strong>{item.sku}</strong>
+                    {item.title && <span>{item.title}</span>}
+                    {item.description && <small>{item.description}</small>}
+                    {item.dimensions && <small>{item.dimensions}</small>}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {product.gridVariants && (
+          <div class="detail-step-section">
+            <p class="detail-section-title">选择规格</p>
+            <div class="grid-variant-table" id="gridVariantTable" style={`--grid-cols: ${product.gridVariants.columns.length}`}>
+              <div class="grid-variant-header">
+                <div class="grid-variant-corner"></div>
+                {product.gridVariants.columns.map(col => (
+                  <div class="grid-variant-col-label">{col.label}</div>
+                ))}
+              </div>
+              {product.gridVariants.rows.map((row, ri) => (
+                <div class="grid-variant-row">
+                  <div class="grid-variant-row-label">{row.label}</div>
+                  {product.gridVariants.columns.map((col, ci) => {
+                    const cell = product.gridVariants.cells.find(c => c.row === ri && c.col === ci);
+                    const isFirst = ri === 0 && ci === 0;
+                    return (
+                      <button
+                        class={`grid-variant-cell ${isFirst ? 'active' : ''}`}
+                        data-row={ri}
+                        data-col={ci}
+                        data-index={cell ? product.gridVariants.cells.indexOf(cell) : 0}
+                      >
+                        {cell ? cell.sku : ''}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+            <p class="detail-step-label" id="detailStepLabel">{product.gridVariants.cells[0].sku}</p>
+          </div>
+        )}
+
+        {product.stepVariants && product.stepVariants.length > 0 && !product.gridVariants && !(product.modelFilters && product.modelFilters.length > 0) && (
+          <div class="detail-step-section">
+            <p class="detail-section-title">选择规格</p>
+            <div class="step-variant-toggles" id="stepVariantToggles">
+              {product.stepVariants.map((v, i) => (
+                <button class={`step-variant-btn ${i === 0 ? 'active' : ''}`} data-index={i}>
+                  {v.label}
+                </button>
+              ))}
+            </div>
+            <p class="detail-step-label" id="detailStepLabel">{product.stepVariants[0].sku}</p>
+          </div>
+        )}
+
+        {product.hasAccessories && (
+          <div class="detail-accessories-section">
+            <p class="detail-section-title">配件选项</p>
+            <div class="accessory-toggles" id="accessoryToggles">
+              <button class="accessory-btn" data-accessory="wheels" aria-pressed="false">
+                <span class="accessory-icon">&#9881;</span>
+                <span>轮子</span>
+              </button>
+              <button class="accessory-btn" data-accessory="handrail" aria-pressed="false">
+                <span class="accessory-icon">&#9776;</span>
+                <span>扶手</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {product.addons && product.addons.length > 0 && (
+          <div class="detail-addons-section">
+            <p class="detail-section-title">加装选项</p>
+            <div class="addon-toggles" id="addonToggles">
+              {product.addons.map(a => (
+                <button class="accessory-btn addon-btn" data-addon={a.key} aria-pressed="false">
+                  <span>{a.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="detail-section">
+          <h3 class="detail-section-title">产品介绍</h3>
+          <p class="detail-desc">{product.description}</p>
+        </div>
+
+        {product.features && product.features.length > 0 && (
+          <div class="detail-section">
+            <h3 class="detail-section-title">产品特性</h3>
+            <ul class="detail-features">
+              {product.features.map(f => <li>{f}</li>)}
+            </ul>
+          </div>
+        )}
+
+        <div class="detail-section">
+          <h3 class="detail-section-title">规格参数</h3>
+          <table class="detail-specs">
+            {product.stepVariants && product.stepVariants.length > 0 && (
+              <tr>
+                <td class="spec-label">型号</td>
+                <td class="spec-value" id="specModel">{product.stepVariants[0].sku}</td>
+              </tr>
+            )}
+            {product.gridVariants && (
+              <tr>
+                <td class="spec-label">型号</td>
+                <td class="spec-value" id="specModel">{product.gridVariants.cells[0].sku}</td>
+              </tr>
+            )}
+            {product.modelItems && product.modelItems.length > 0 && (
+              <tr>
+                <td class="spec-label">型号</td>
+                <td class="spec-value" id="specModel">共 {product.modelItems.length} 个型号，见上方筛选结果与下方对照表</td>
+              </tr>
+            )}
+            <tr>
+              <td class="spec-label">材质</td>
+              <td class="spec-value">{product.material}</td>
+            </tr>
+            <tr>
+              <td class="spec-label">尺寸</td>
+              <td class="spec-value" id="specDimensions">{product.dimensions}</td>
+            </tr>
+            {product.maxLoad && (
+              <tr>
+                <td class="spec-label">承重</td>
+                <td class="spec-value" id="specMaxLoad">{product.maxLoad}</td>
+              </tr>
+            )}
+          </table>
+        </div>
+
+        <div class="detail-actions">
+          <a href={`mailto:info@twinco.com?subject=${encodeURIComponent('产品咨询: ' + product.name + ' (' + product.id + ')')}`} class="detail-inquiry-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            咨询此产品
+          </a>
+          <button class="detail-back-btn" onclick="history.back()">← 返回列表</button>
+        </div>
+      </div>
+    </div>
+
+    {product.optionProducts && product.optionProducts.length > 0 && (
+      <section class="option-products-section">
+        <div class="option-products-inner">
+          <p class="option-products-kicker">Optional Products</p>
+          <h2 class="option-products-title">选配产品</h2>
+          {product.optionProducts.map(option => (
+            <article class="option-product" data-option-product>
+              <div class="option-product-gallery">
+                <div class="option-product-main-image">
+                  <img src={option.defaultImage} alt={option.name} data-option-main-image loading="lazy" />
+                </div>
+                <div class="option-product-thumbs">
+                  {option.colors.map((color, idx) => (
+                    <button
+                      class={`option-thumb ${idx === 0 ? 'active' : ''}`}
+                      type="button"
+                      data-option-choice
+                      data-image={color.image}
+                      data-label={`${color.name} · ${color.sku}`}
+                    >
+                      <img src={color.image} alt={`${option.name} ${color.name}`} loading="lazy" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div class="option-product-info">
+                <p class="option-product-label">选配件</p>
+                <h3 class="option-product-name">{option.name}</h3>
+                {option.subtitle && <p class="option-product-subtitle">{option.subtitle}</p>}
+                <p class="option-product-desc">{option.description}</p>
+                <div class="option-color-section">
+                  <p class="detail-color-label" data-option-active-label>
+                    {option.colors[0].name} · {option.colors[0].sku}
+                  </p>
+                  <div class="option-colors">
+                    {option.colors.map((color, idx) => (
+                      <button
+                        class={`detail-color-dot option-color-dot ${idx === 0 ? 'active' : ''}`}
+                        type="button"
+                        style={`background-color: ${color.hex}`}
+                        title={`${color.name} · ${color.sku}`}
+                        data-option-choice
+                        data-image={color.image}
+                        data-label={`${color.name} · ${color.sku}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                {option.features && option.features.length > 0 && (
+                  <ul class="option-product-features">
+                    {option.features.map(feature => <li>{feature}</li>)}
+                  </ul>
+                )}
+                {option.specs && option.specs.length > 0 && (
+                  <table class="option-product-specs">
+                    <tbody>
+                      {option.specs.map(spec => (
+                        <tr>
+                          <td>{spec.label}</td>
+                          <td>{spec.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {product.infoSections && product.infoSections.length > 0 && (
+      <section class="detail-info-sections">
+        {product.infoSections.map((sec, idx) => (
+          <div class="info-accordion">
+            <button class="info-accordion-header" aria-expanded={idx === 0 ? 'true' : 'false'}>
+              <span>{sec.title}</span>
+              <svg class="info-accordion-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            <div class={`info-accordion-body ${idx === 0 ? 'open' : ''}`}>
+              <ul class="info-list">
+                {sec.content.map(item => <li>{item}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </section>
+    )}
+
+    {product.accessories && product.accessories.length > 0 && (
+      <section class="detail-accessories">
+        <h2 class="detail-accessories-title">配套配件</h2>
+        <div class="detail-accessories-grid">
+          {product.accessories.map(acc => (
+            <div class="accessory-card">
+              {acc.image ? (
+                <img src={acc.image} alt={acc.label} loading="lazy" />
+              ) : (
+                <div class="accessory-card-placeholder"><span>图片待补</span></div>
+              )}
+              <div class="accessory-card-info">
+                <h3 class="accessory-card-name">{acc.label}</h3>
+                <p class="accessory-card-sku">SKU: {acc.sku}</p>
+                {acc.description && <p class="accessory-card-desc">{acc.description}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {product.highlights && product.highlights.length > 0 && (
+      <section class="detail-highlights">
+        {product.highlights.map((hl, idx) => (
+          <div class={`highlight-block ${idx % 2 === 1 ? 'reverse' : ''}`}>
+            <div class={`highlight-image ${hl.image && product.lifestyleImages?.includes(hl.image) ? 'highlight-image-4-3' : ''}`}>
+              {hl.image ? (
+                <img src={hl.image} alt={hl.titleZh || hl.title} loading="lazy" />
+              ) : (
+                <div class="highlight-image-placeholder"><span>图片待补</span></div>
+              )}
+            </div>
+            <div class="highlight-text">
+              <h3 class="highlight-title">{hl.titleZh || hl.title}</h3>
+              <p class="highlight-desc">{hl.textZh || hl.text}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+    )}
+
+    {product.lifestyleImages && product.lifestyleImages.length > 0 && (
+      <section class="detail-lifestyle">
+        <h2 class="detail-gallery-title">使用场景</h2>
+        <div class="detail-lifestyle-grid">
+          {product.lifestyleImages.map((src, idx) => (
+            <figure class="lifestyle-item">
+              <img src={src} alt={`${product.name} 使用场景 ${idx + 1}`} loading="lazy" />
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {product.detailImages && product.detailImages.length > 0 && (
+      <section class="detail-gallery">
+        <h2 class="detail-gallery-title">产品细节图</h2>
+        <div class="detail-gallery-grid">
+          {product.detailImages.map(img => (
+            <figure class="detail-gallery-item">
+              <img src={img.src} alt={img.captionEn || img.caption || ''} loading="lazy" />
+              {(img.caption || img.captionEn) && (
+                <figcaption>{img.caption || img.captionEn}</figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+    {((product.catalogImages && product.catalogImages.length > 0) || product.catalogPdf) && (
+      <section class="catalog-reference">
+        <div class="catalog-reference-header">
+          <div>
+            <p class="catalog-reference-kicker">Reference</p>
+            <h2 class="catalog-reference-title">型号对照表</h2>
+          </div>
+          {product.catalogPdf && (
+            <a class="catalog-reference-link" href={product.catalogPdf} target="_blank" rel="noopener">
+              下载 PDF
+            </a>
+          )}
+        </div>
+        {product.catalogImages && product.catalogImages.length > 0 && (
+          <div class="catalog-reference-pages">
+            {product.catalogImages.map(img => (
+              <figure class="catalog-reference-page">
+                <img src={img.src} alt={img.captionEn || img.caption || 'Catalog reference'} loading="lazy" />
+                {(img.caption || img.captionEn) && (
+                  <figcaption>{img.caption || img.captionEn}</figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )}
+      </section>
+    )}
+  </main>
+
+  <script define:vars={{ productColors: product.colors || [], defaultImage: product.defaultImage || '', hasAccessories: product.hasAccessories || false, stepVariants: product.stepVariants || [], productAddons: product.addons || [], gridVariants: product.gridVariants || null }}>
+    window.__PRODUCT_COLORS__ = productColors;
+    window.__DEFAULT_IMAGE__ = defaultImage;
+    window.__HAS_ACCESSORIES__ = hasAccessories;
+    window.__STEP_VARIANTS__ = stepVariants;
+    window.__ADDONS__ = productAddons;
+    window.__GRID_VARIANTS__ = gridVariants;
+  </script>
+  <script is:inline src="/scripts/product-detail.js"></script>
+</BaseLayout>
