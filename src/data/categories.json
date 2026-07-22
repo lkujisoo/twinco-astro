@@ -5,7 +5,7 @@
     "nameEn": "Climbing & Safety Steps",
     "subcategories": [
       { "id": "stepstool", "name": "Stepstools", "nameEn": "Stepstools", "thumbnail": "/images/products/6300/default.jpg" },
-      { "id": "plastic-step-ladder", "name": "Plastic Step Ladders", "nameEn": "Plastic Step Ladders", "thumbnail": "/images/products/6400/default.jpg" },
+      { "id": "aluminum-step-ladder", "name": "Aluminum Step Ladders", "nameEn": "Aluminum Step Ladders", "thumbnail": "/images/products/3028/default.png" },
       { "id": "metal-step-ladder", "name": "Metal Step Ladders", "nameEn": "Metal Step Ladders", "thumbnail": "/images/products/2029/default.jpg" },
       { "id": "heavy-duty-safety", "name": "Heavy Duty Safety Steps", "nameEn": "Heavy Duty Safety Steps", "thumbnail": "/images/products/6700/default.jpg" }
     ]

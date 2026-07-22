@@ -30,6 +30,10 @@ const products = defineCollection({
       ral: z.string().optional(),
     })).optional(),
     hasAccessories: z.boolean().optional(),
+    accessoryButtons: z.array(z.object({
+      key: z.string(),
+      label: z.string(),
+    })).optional(),
     addons: z.array(z.object({
       key: z.string(),
       label: z.string(),

@@ -154,14 +154,24 @@ if (cat && cat.subcategories) {
           <div class="detail-accessories-section">
             <p class="detail-section-title">配件选项</p>
             <div class="accessory-toggles" id="accessoryToggles">
-              <button class="accessory-btn" data-accessory="wheels" aria-pressed="false">
-                <span class="accessory-icon">&#9881;</span>
-                <span>轮子</span>
-              </button>
-              <button class="accessory-btn" data-accessory="handrail" aria-pressed="false">
-                <span class="accessory-icon">&#9776;</span>
-                <span>扶手</span>
-              </button>
+              {product.accessoryButtons ? (
+                product.accessoryButtons.map(btn => (
+                  <button class="accessory-btn" data-accessory={btn.key} aria-pressed="false">
+                    <span>{btn.label}</span>
+                  </button>
+                ))
+              ) : (
+                <>
+                  <button class="accessory-btn" data-accessory="wheels" aria-pressed="false">
+                    <span class="accessory-icon">&#9881;</span>
+                    <span>轮子</span>
+                  </button>
+                  <button class="accessory-btn" data-accessory="handrail" aria-pressed="false">
+                    <span class="accessory-icon">&#9776;</span>
+                    <span>扶手</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

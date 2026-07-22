@@ -16,6 +16,7 @@ pnpm-debug.log*
 
 # local temporary files
 tmp/
+*.bak
 
 # editor settings
 .vscode/

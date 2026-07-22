@@ -432,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.classList.toggle('active');
           if (acc === 'wheels') wheelsActive = !isPressed;
           if (acc === 'handrail') handrailActive = !isPressed;
+          if (acc === 'both') { wheelsActive = !isPressed; handrailActive = !isPressed; }
           selectColor(activeColorIndex);
         });
       });
