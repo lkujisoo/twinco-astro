@@ -415,6 +415,23 @@ if (cat && cat.subcategories) {
         </div>
       </section>
     )}
+    {product.certificateCards && product.certificateCards.length > 0 && (
+      <section class="certificate-preview-section">
+        <h2 class="certificate-preview-title">Certificates & Test Reports</h2>
+        <div class="certificate-preview-grid">
+          {product.certificateCards.map(cert => (
+            <article class="certificate-preview-card">
+              <a class="certificate-preview-image" href={cert.href} target="_blank" rel="noopener" aria-label={`Open ${cert.title}`}>
+                <img src={cert.image} alt={cert.title} loading="lazy" />
+              </a>
+              <a class="certificate-preview-link" href={cert.href} target="_blank" rel="noopener">
+                {cert.title}
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
     {((product.catalogImages && product.catalogImages.length > 0) || product.catalogPdf) && (
       <section class="catalog-reference">
         <div class="catalog-reference-header">

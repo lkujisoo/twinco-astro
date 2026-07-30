@@ -67,10 +67,16 @@ async function loadProducts() {
 function getColorImage(product, color) {
   if (color.image) return color.image;
   const sv = product.stepVariants;
-  if (sv && sv.length && sv[0].colorImages && sv[0].colorImages[color.name]) {
-    return sv[0].colorImages[color.name];
+  if (sv && sv.length) {
+    if (sv[0].colorImages && sv[0].colorImages[color.name]) {
+      return sv[0].colorImages[color.name];
+    }
+    // Color not covered by the first variant (e.g. a color that only exists on
+    // another step variant). Fall back to the variant/default image instead of
+    // flashing "暂缺", matching the detail page behavior.
+    if (sv[0].image) return sv[0].image;
   }
-  return null;
+  return product.defaultImage || null;
 }
 
 function createProductCard(product, index) {

@@ -17,6 +17,11 @@ const products = defineCollection({
     dimensions: z.string(),
     maxLoad: z.string().optional(),
     certifications: z.array(z.string()).optional(),
+    certificateCards: z.array(z.object({
+      title: z.string(),
+      image: z.string(),
+      href: z.string(),
+    })).optional(),
     defaultImage: z.string().optional(),
     colors: z.array(z.object({
       name: z.string(),

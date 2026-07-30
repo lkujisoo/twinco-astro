@@ -15,11 +15,11 @@
     "name": "人体工学座椅与脚踏系列",
     "nameEn": "Ergonomic Seating & Footrests",
     "subcategories": [
-      { "id": "footrest", "name": "Footrests", "nameEn": "Footrests", "thumbnail": "" },
-      { "id": "wobble-stool", "name": "Wobble Stools", "nameEn": "Wobble Stools", "thumbnail": "" },
+      { "id": "footrest", "name": "Footrests", "nameEn": "Footrests", "thumbnail": "/images/products/3111/default.jpg" },
+      { "id": "wobble-stool", "name": "Wobble Stools", "nameEn": "Wobble Stools", "thumbnail": "/images/products/6131/6131-black.png" },
       { "id": "anti-fatigue-stool", "name": "Anti-fatigue Stools", "nameEn": "Anti-fatigue Stools", "thumbnail": "/images/products/6110/default.jpg" },
-      { "id": "task-chair", "name": "Ergonomic Task Chairs", "nameEn": "Ergonomic Task Chairs", "thumbnail": "" },
-      { "id": "ball-chair", "name": "Ball Chairs", "nameEn": "Ball Chairs", "thumbnail": "" }
+      { "id": "task-chair", "name": "Ergonomic Task Chairs", "nameEn": "Ergonomic Task Chairs", "thumbnail": "/images/products/15008/15008.png" },
+      { "id": "ball-chair", "name": "Ball Chairs", "nameEn": "Ball Chairs", "thumbnail": "/images/products/4100/产品图.png" }
     ]
   },
   {
@@ -41,9 +41,9 @@
     "name": "资料展示与广告陈列系列",
     "nameEn": "Literature & Advertising Displays",
     "subcategories": [
-      { "id": "literature-holder", "name": "Literature Holders", "nameEn": "Literature Holders", "thumbnail": "" },
-      { "id": "acrylic-display", "name": "Acrylic Displays", "nameEn": "Acrylic Displays", "thumbnail": "" },
-      { "id": "display-stand", "name": "Display Stands", "nameEn": "Display Stands", "thumbnail": "" }
+      { "id": "literature-holder", "name": "Literature Holders", "nameEn": "Literature Holders", "thumbnail": "/images/products/5108/5108.png" },
+      { "id": "acrylic-display", "name": "Acrylic Displays", "nameEn": "Acrylic Displays", "thumbnail": "/images/products/5810/5810.png" },
+      { "id": "display-stand", "name": "Display Stands", "nameEn": "Display Stands", "thumbnail": "/images/products/5171/black.png" }
     ]
   },
   {
@@ -51,12 +51,12 @@
     "name": "公共空间与设施用品系列",
     "nameEn": "Public Space & Facility",
     "subcategories": [
-      { "id": "waste-bin", "name": "Waste Bins", "nameEn": "Waste Bins", "thumbnail": "" },
-      { "id": "umbrella-stand", "name": "Umbrella Stands", "nameEn": "Umbrella Stands", "thumbnail": "" },
-      { "id": "belt-barrier", "name": "Belt Barriers", "nameEn": "Belt Barriers", "thumbnail": "" },
-      { "id": "coat-stand", "name": "Coat Stands", "nameEn": "Coat Stands", "thumbnail": "" },
-      { "id": "coat-hanger", "name": "Coat Hangers", "nameEn": "Coat Hangers", "thumbnail": "" },
-      { "id": "door-stopper", "name": "Door Stoppers", "nameEn": "Door Stoppers", "thumbnail": "" }
+      { "id": "waste-bin", "name": "Waste Bins", "nameEn": "Waste Bins", "thumbnail": "/images/products/2000/default.png" },
+      { "id": "umbrella-stand", "name": "Umbrella Stands", "nameEn": "Umbrella Stands", "thumbnail": "/images/products/2025/2025-1.jpg" },
+      { "id": "belt-barrier", "name": "Belt Barriers", "nameEn": "Belt Barriers", "thumbnail": "/images/products/3200/3200-1.jpg" },
+      { "id": "coat-stand", "name": "Coat Stands", "nameEn": "Coat Stands", "thumbnail": "/images/products/8114/default.jpg" },
+      { "id": "coat-hanger", "name": "Coat Hangers", "nameEn": "Coat Hangers", "thumbnail": "/images/products/8020/display-8020.png" },
+      { "id": "door-stopper", "name": "Door Stoppers", "nameEn": "Door Stoppers", "thumbnail": "/images/products/1291/default.png" }
     ]
   },
   {
@@ -65,10 +65,10 @@
     "nameEn": "Office Storage & Desk Organization",
     "subcategories": [
       { "id": "plastic-cabinet", "name": "Plastic Cabinets", "nameEn": "Plastic Cabinets", "thumbnail": "" },
-      { "id": "letter-tray", "name": "Letter Tray Systems", "nameEn": "Letter Tray Systems", "thumbnail": "" },
-      { "id": "pen-tray", "name": "Pen Trays", "nameEn": "Pen Trays", "thumbnail": "" },
-      { "id": "copyholder", "name": "Copyholders", "nameEn": "Copyholders", "thumbnail": "" },
-      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "" }
+      { "id": "letter-tray", "name": "Letter Tray Systems", "nameEn": "Letter Tray Systems", "thumbnail": "/images/products/2100/default.jpg" },
+      { "id": "pen-tray", "name": "Pen Trays", "nameEn": "Pen Trays", "thumbnail": "/images/products/9040/9040-1.jpg" },
+      { "id": "copyholder", "name": "Copyholders", "nameEn": "Copyholders", "thumbnail": "/images/products/7200/default.jpg" },
+      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "/images/products/14197/default.jpg" }
     ]
   },
   {
@@ -76,11 +76,11 @@
     "name": "电脑办公配件与移动工作站系列",
     "nameEn": "Computer Accessories & Mobile Workstations",
     "subcategories": [
-      { "id": "cpu-holder", "name": "CPU Holders", "nameEn": "CPU Holders", "thumbnail": "" },
-      { "id": "keyboard-drawer", "name": "Keyboard Drawers", "nameEn": "Keyboard Drawers", "thumbnail": "" },
-      { "id": "click-workstation", "name": "CLICK Workstations", "nameEn": "CLICK Workstations", "thumbnail": "" },
-      { "id": "mobile-computer", "name": "Mobile Computer Stands", "nameEn": "Mobile Computer Stands", "thumbnail": "" },
-      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "" }
+      { "id": "cpu-holder", "name": "CPU Holders", "nameEn": "CPU Holders", "thumbnail": "/images/products/1202/default.jpg" },
+      { "id": "keyboard-drawer", "name": "Keyboard Drawers", "nameEn": "Keyboard Drawers", "thumbnail": "/images/products/9060/9060-basic.jpg" },
+      { "id": "click-workstation", "name": "CLICK Workstations", "nameEn": "CLICK Workstations", "thumbnail": "/images/products/6810/default.jpg" },
+      { "id": "mobile-computer", "name": "Mobile Computer Stands", "nameEn": "Mobile Computer Stands", "thumbnail": "/images/products/6870/display-6870.jpg" },
+      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "/images/products/6650/display-6650.png" }
     ]
   },
   {
@@ -89,10 +89,10 @@
     "nameEn": "Transport & Ergonomic Support",
     "subcategories": [
       { "id": "sack-truck", "name": "Sack Trucks", "nameEn": "Sack Trucks", "thumbnail": "" },
-      { "id": "foldable-sack-truck", "name": "Foldable Sack Trucks", "nameEn": "Foldable Sack Trucks", "thumbnail": "" },
-      { "id": "forearm-support", "name": "Forearm Supports", "nameEn": "Forearm Supports", "thumbnail": "" },
-      { "id": "monitor-arm", "name": "Monitor Arm Mount Stands", "nameEn": "Monitor Arm Mount Stands", "thumbnail": "" },
-      { "id": "acoustic-partition", "name": "Acoustic Partitions", "nameEn": "Acoustic Partitions", "thumbnail": "" }
+      { "id": "foldable-sack-truck", "name": "Foldable Sack Trucks", "nameEn": "Foldable Sack Trucks", "thumbnail": "/images/products/9500/default.jpg" },
+      { "id": "forearm-support", "name": "Forearm Supports", "nameEn": "Forearm Supports", "thumbnail": "/images/products/410390/410392.png" },
+      { "id": "monitor-arm", "name": "Monitor Arm Mount Stands", "nameEn": "Monitor Arm Mount Stands", "thumbnail": "/images/products/57100/default.png" },
+      { "id": "acoustic-partition", "name": "Acoustic Partitions", "nameEn": "Acoustic Partitions", "thumbnail": "/images/products/6920/6920-1.png" }
     ]
   }
 ]
