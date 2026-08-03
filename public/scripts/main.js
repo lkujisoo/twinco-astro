@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearch();
   initLangSwitcher();
   initMegaDropdown();
+  initHomeHeroSlider();
   initHeroSections();
 });
 
@@ -217,6 +218,67 @@ function renderSubcategories(category) {
   });
   container.innerHTML = '';
   container.appendChild(grid);
+}
+
+function initHomeHeroSlider() {
+  const slider = document.getElementById('homeHeroSlider');
+  if (!slider) return;
+
+  const slides = Array.from(slider.querySelectorAll('.home-hero-slide'));
+  const dots = Array.from(document.querySelectorAll('[data-hero-dot]'));
+  const prev = document.querySelector('[data-hero-prev]');
+  const next = document.querySelector('[data-hero-next]');
+  if (slides.length <= 1) return;
+
+  let activeIndex = 0;
+  let timer = null;
+  const interval = 6000;
+
+  function showSlide(index) {
+    activeIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const isActive = slideIndex === activeIndex;
+      slide.classList.toggle('active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+    });
+    dots.forEach((dot, dotIndex) => {
+      const isActive = dotIndex === activeIndex;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-current', String(isActive));
+    });
+  }
+
+  function restartTimer() {
+    window.clearInterval(timer);
+    timer = window.setInterval(() => showSlide(activeIndex + 1), interval);
+  }
+
+  prev?.addEventListener('click', () => {
+    showSlide(activeIndex - 1);
+    restartTimer();
+  });
+  next?.addEventListener('click', () => {
+    showSlide(activeIndex + 1);
+    restartTimer();
+  });
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      showSlide(Number(dot.dataset.heroDot));
+      restartTimer();
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      showSlide(activeIndex - 1);
+      restartTimer();
+    }
+    if (event.key === 'ArrowRight') {
+      showSlide(activeIndex + 1);
+      restartTimer();
+    }
+  });
+
+  restartTimer();
 }
 
 function initHeroSections() {

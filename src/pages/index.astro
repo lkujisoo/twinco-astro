@@ -1,79 +1,107 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import categories from '../data/categories.json';
+
+const heroImages = [
+  '/images/hero/hero-01.webp',
+  '/images/hero/hero-02.webp',
+  '/images/hero/hero-03.webp',
+  '/images/hero/hero-04.webp',
+  '/images/hero/hero-05.webp',
+  '/images/hero/hero-06.webp',
+  '/images/hero/hero-07.webp'
+];
 ---
 <BaseLayout title="Twinco | Premium Furniture">
-  <main class="hero-sections">
-    <section class="hero-section" data-section="1">
-      <div class="hero-bg" style="background-color: #394957;">
-        <div class="hero-placeholder-img">
-          <span>现代办公空间全景</span>
-        </div>
+  <main class="home-page">
+    <section class="home-hero" aria-label="主视觉图片轮播">
+      <div class="home-hero-slider" id="homeHeroSlider">
+        {heroImages.map((image, index) => (
+          <figure class={`home-hero-slide ${index === 0 ? 'active' : ''}`} aria-hidden={index === 0 ? 'false' : 'true'}>
+            <img
+              src={image}
+              alt={`Twinco 主视觉 ${index + 1}`}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </figure>
+        ))}
       </div>
-      <div class="hero-content">
+
+      <div class="home-hero-overlay"></div>
+
+      <div class="home-hero-content">
         <p class="hero-eyebrow">EST. 2010</p>
-        <h1 class="hero-title">专业办公<br>空间方案</h1>
+        <h1 class="hero-title">专业办公<br />空间方案</h1>
         <p class="hero-desc">十五年专注办公家具研发制造，为欧洲企业打造高效舒适的工作环境</p>
-        <a href="#section-2" class="hero-cta">探索更多</a>
-      </div>
-      <div class="scroll-indicator">
-        <span>向下滚动</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
-
-    <section class="hero-section" data-section="2" id="section-2">
-      <div class="hero-bg" style="background-color: #3D5A80;">
-        <div class="hero-placeholder-img">
-          <span>生产线 · 品质检测</span>
-        </div>
-      </div>
-      <div class="hero-content hero-content--right">
-        <p class="hero-eyebrow">品质</p>
-        <h2 class="hero-title">BIFMA 认证<br>欧标品质</h2>
-        <p class="hero-desc">全线产品通过 BIFMA / EN 标准测试，从选材到出厂层层把控</p>
-      </div>
-    </section>
-
-    <section class="hero-section" data-section="3">
-      <div class="hero-bg" style="background-color: #4A5D6E;">
-        <div class="hero-placeholder-img">
-          <span>材料仓库 · 板材特写</span>
-        </div>
-      </div>
-      <div class="hero-content">
-        <p class="hero-eyebrow">环保</p>
-        <h2 class="hero-title">绿色制造<br>可持续发展</h2>
-        <p class="hero-desc">E0/E1 级环保板材，FSC 认证木材，水性漆工艺，低碳生产全流程</p>
-      </div>
-    </section>
-
-<!-- PLACEHOLDER_MORE_SECTIONS -->
-
-    <section class="hero-section" data-section="4">
-      <div class="hero-bg" style="background-color: #364F60;">
-        <div class="hero-placeholder-img">
-          <span>办公空间场景 · 开放式办公</span>
-        </div>
-      </div>
-      <div class="hero-content hero-content--right">
-        <p class="hero-eyebrow">产品</p>
-        <h2 class="hero-title">10 大品类<br>200+ 型号</h2>
-        <p class="hero-desc">办公桌、工学椅、储物柜、屏风隔断、协作空间，全场景覆盖</p>
         <a href="/products" class="hero-cta">浏览所有商品</a>
       </div>
+
+      <button class="home-hero-arrow home-hero-arrow--prev" type="button" aria-label="上一张主视觉" data-hero-prev>
+        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18 9 12l6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button class="home-hero-arrow home-hero-arrow--next" type="button" aria-label="下一张主视觉" data-hero-next>
+        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="home-hero-dots" aria-label="主视觉切换">
+        {heroImages.map((_, index) => (
+          <button
+            class={`home-hero-dot ${index === 0 ? 'active' : ''}`}
+            type="button"
+            aria-label={`切换到第 ${index + 1} 张主视觉`}
+            aria-current={index === 0 ? 'true' : 'false'}
+            data-hero-dot={index}
+          ></button>
+        ))}
+      </div>
     </section>
 
-    <section class="hero-section" data-section="5">
-      <div class="hero-bg" style="background-color: #2A3F52;">
-        <div class="hero-placeholder-img">
-          <span>全球物流 · 欧洲市场</span>
-        </div>
+    <section class="home-categories" id="section-2" aria-labelledby="homeCategoriesTitle">
+      <div class="home-section-head">
+        <p class="home-section-kicker">产品</p>
+        <h2 class="home-section-title" id="homeCategoriesTitle">10 大品类<br />200+ 型号</h2>
+        <p class="home-section-desc">办公桌、工学椅、储物柜、屏风隔断、协作空间，全场景覆盖</p>
       </div>
-      <div class="hero-content hero-content--center">
-        <p class="hero-eyebrow">出口欧洲</p>
-        <h2 class="hero-title">服务全球客户</h2>
-        <p class="hero-desc">产品远销 30+ 国家和地区，欧洲市场深耕多年，专业团队提供一站式服务</p>
-        <a href="/about" class="hero-cta">了解 Twinco</a>
+
+      <div class="home-category-grid">
+        {categories.map((category) => {
+          const firstImage = category.subcategories.find((sub) => sub.thumbnail)?.thumbnail;
+          const subCount = category.subcategories.length;
+          return (
+            <a class="home-category-card" href={`/products?category=${category.id}`}>
+              <div class="home-category-image">
+                {firstImage ? (
+                  <img src={firstImage} alt={category.nameEn} loading="lazy" decoding="async" />
+                ) : (
+                  <span>{category.nameEn.slice(0, 1)}</span>
+                )}
+              </div>
+              <div class="home-category-copy">
+                <h3>{category.name}</h3>
+                <p>{category.nameEn}</p>
+                <span>{subCount} 个子分类</span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="home-brand-band">
+      <div class="home-brand-copy">
+        <p class="home-section-kicker">品质</p>
+        <h2 class="home-section-title">BIFMA 认证<br />欧标品质</h2>
+        <p class="home-section-desc">全线产品通过 BIFMA / EN 标准测试，从选材到出厂层层把控</p>
+      </div>
+      <div class="home-brand-copy">
+        <p class="home-section-kicker">出口欧洲</p>
+        <h2 class="home-section-title">服务全球客户</h2>
+        <p class="home-section-desc">产品远销 30+ 国家和地区，欧洲市场深耕多年，专业团队提供一站式服务</p>
       </div>
     </section>
   </main>
