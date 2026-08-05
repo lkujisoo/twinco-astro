@@ -27,13 +27,10 @@
     "name": "展示板与会议演示系列",
     "nameEn": "Presentation & Meeting Boards",
     "subcategories": [
-      { "id": "a-board", "name": "A Boards", "nameEn": "A Boards", "thumbnail": "" },
-      { "id": "snap-frame", "name": "Snap Frames", "nameEn": "Snap Frames", "thumbnail": "" },
-      { "id": "whiteboard", "name": "Whiteboards", "nameEn": "Whiteboards", "thumbnail": "" },
-      { "id": "cork-board", "name": "Cork Boards", "nameEn": "Cork Boards", "thumbnail": "" },
-      { "id": "felt-board", "name": "Felt Boards", "nameEn": "Felt Boards", "thumbnail": "" },
-      { "id": "flip-chart", "name": "Flip Charts", "nameEn": "Flip Charts", "thumbnail": "" },
-      { "id": "glass-whiteboard", "name": "Glass Whiteboards", "nameEn": "Glass Whiteboards", "thumbnail": "" }
+      { "id": "whiteboard", "name": "Whiteboards", "nameEn": "Whiteboards", "thumbnail": "/images/products/5410/5410.png" },
+      { "id": "glass-whiteboard", "name": "Glass Whiteboards", "nameEn": "Glass Whiteboards", "thumbnail": "/images/products/5608/5608.png" },
+      { "id": "flip-chart", "name": "Flip Charts", "nameEn": "Flip Charts", "thumbnail": "/images/products/5441/5441.jpg" },
+      { "id": "showcase", "name": "Showcases", "nameEn": "Showcases", "thumbnail": "/images/products/5484/5485.png" }
     ]
   },
   {
@@ -51,6 +48,7 @@
     "name": "公共空间与设施用品系列",
     "nameEn": "Public Space & Facility",
     "subcategories": [
+      { "id": "poster-frame", "name": "Poster Frames", "nameEn": "Poster Frames", "thumbnail": "/images/products/5310/5311.png" },
       { "id": "waste-bin", "name": "Waste Bins", "nameEn": "Waste Bins", "thumbnail": "/images/products/2000/default.png" },
       { "id": "umbrella-stand", "name": "Umbrella Stands", "nameEn": "Umbrella Stands", "thumbnail": "/images/products/2025/2025-1.jpg" },
       { "id": "belt-barrier", "name": "Belt Barriers", "nameEn": "Belt Barriers", "thumbnail": "/images/products/3200/3200-1.jpg" },
@@ -68,7 +66,8 @@
       { "id": "letter-tray", "name": "Letter Tray Systems", "nameEn": "Letter Tray Systems", "thumbnail": "/images/products/2100/default.jpg" },
       { "id": "pen-tray", "name": "Pen Trays", "nameEn": "Pen Trays", "thumbnail": "/images/products/9040/9040-1.jpg" },
       { "id": "copyholder", "name": "Copyholders", "nameEn": "Copyholders", "thumbnail": "/images/products/7200/default.jpg" },
-      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "/images/products/14197/default.jpg" }
+      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "/images/products/14197/default.jpg" },
+      { "id": "bookend", "name": "Bookends", "nameEn": "Bookends", "thumbnail": "/images/products/1281/default.png" }
     ]
   },
   {
@@ -80,7 +79,8 @@
       { "id": "keyboard-drawer", "name": "Keyboard Drawers", "nameEn": "Keyboard Drawers", "thumbnail": "/images/products/9060/9060-basic.jpg" },
       { "id": "click-workstation", "name": "CLICK Workstations", "nameEn": "CLICK Workstations", "thumbnail": "/images/products/6810/default.jpg" },
       { "id": "mobile-computer", "name": "Mobile Computer Stands", "nameEn": "Mobile Computer Stands", "thumbnail": "/images/products/6870/display-6870.jpg" },
-      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "/images/products/6650/display-6650.png" }
+      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "/images/products/6650/display-6650.png" },
+      { "id": "laptop-stand", "name": "Laptop Stands", "nameEn": "Laptop Stands", "thumbnail": "/images/products/7310/default.png" }
     ]
   },
   {
@@ -88,11 +88,18 @@
     "name": "搬运工具与人体工学支撑系列",
     "nameEn": "Transport & Ergonomic Support",
     "subcategories": [
-      { "id": "sack-truck", "name": "Sack Trucks", "nameEn": "Sack Trucks", "thumbnail": "" },
       { "id": "foldable-sack-truck", "name": "Foldable Sack Trucks", "nameEn": "Foldable Sack Trucks", "thumbnail": "/images/products/9500/default.jpg" },
       { "id": "forearm-support", "name": "Forearm Supports", "nameEn": "Forearm Supports", "thumbnail": "/images/products/410390/410392.png" },
       { "id": "monitor-arm", "name": "Monitor Arm Mount Stands", "nameEn": "Monitor Arm Mount Stands", "thumbnail": "/images/products/57100/default.png" },
       { "id": "acoustic-partition", "name": "Acoustic Partitions", "nameEn": "Acoustic Partitions", "thumbnail": "/images/products/6920/6920-1.png" }
+    ]
+  },
+  {
+    "id": "cable-management",
+    "name": "线缆管理系列",
+    "nameEn": "Cable Management",
+    "subcategories": [
+      { "id": "cable-trough", "name": "Cable Troughs", "nameEn": "Cable Troughs", "thumbnail": "/images/products/1270/1270+71+72.jpg" }
     ]
   }
 ]
