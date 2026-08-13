@@ -56,9 +56,14 @@ function initSearch() {
     if (e.key === 'Escape') closeSearch();
     if (e.key === 'Enter') {
       const query = input.value.trim();
-      if (query) window.location.href = `/products?search=${encodeURIComponent(query)}`;
+      if (query) window.location.href = `${productsPath()}?search=${encodeURIComponent(query)}`;
     }
   });
+}
+
+/** 当前语言的 /products 路径（中文为 /products，其余为 /en/products 等） */
+function productsPath() {
+  return (window.__I18N__ && window.__I18N__.productsPath) || '/products';
 }
 
 function closeSearch() {
@@ -71,16 +76,22 @@ function initLangSwitcher() {
   if (!switcher) return;
   const toggleBtn = switcher.querySelector('.lang-toggle');
   const links = switcher.querySelectorAll('.lang-dropdown a');
+  // 语言项的 href 是构建时算好的「本页对应路径」，但地址栏上的筛选参数和锚点是运行时才有的。
+  // 换语言时把它们原样带过去，保证停在同一个界面（比如筛选后的产品列表、搜索结果）。
+  const urlState = window.location.search + window.location.hash;
+  if (urlState) {
+    links.forEach(link => {
+      link.setAttribute('href', link.getAttribute('href') + urlState);
+    });
+  }
   toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     switcher.classList.toggle('open');
     toggleBtn.setAttribute('aria-expanded', switcher.classList.contains('open'));
   });
   links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      links.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
+    link.addEventListener('click', () => {
+      // 语言项现在是真实链接（/en/products 之类），交给浏览器正常跳转，只负责收起菜单
       switcher.classList.remove('open');
       toggleBtn.setAttribute('aria-expanded', 'false');
     });
@@ -129,12 +140,12 @@ async function initMegaDropdown() {
   }
   subContainer.addEventListener('scroll', updateScrollThumb);
 
-  try {
-    const resp = await fetch('/data/categories.json');
-    categoriesData = await resp.json();
+  // 分类数据由页面按当前语言注入（见 BaseLayout.astro），不再 fetch 静态 json
+  categoriesData = window.__CATEGORIES__ || [];
+  if (categoriesData.length) {
     renderCategories(categoriesData);
-  } catch (err) {
-    console.warn('Categories data not loaded:', err);
+  } else {
+    console.warn('Categories data not injected');
   }
 
   toggle.addEventListener('click', () => {
@@ -189,7 +200,8 @@ function renderCategories(data) {
 function renderSubcategories(category) {
   const container = document.getElementById('megaSubcategories');
   if (!category.subcategories || category.subcategories.length === 0) {
-    container.innerHTML = '<p class="mega-hint">暂无子分类</p>';
+    const empty = (window.__I18N__ && window.__I18N__.megaEmpty) || '';
+    container.innerHTML = `<p class="mega-hint">${empty}</p>`;
     return;
   }
   const grid = document.createElement('div');
@@ -197,7 +209,7 @@ function renderSubcategories(category) {
   category.subcategories.forEach(sub => {
     const item = document.createElement('a');
     item.className = 'mega-sub-item';
-    item.href = `/products?category=${encodeURIComponent(category.id)}&sub=${encodeURIComponent(sub.id)}`;
+    item.href = `${productsPath()}?category=${encodeURIComponent(category.id)}&sub=${encodeURIComponent(sub.id)}`;
     const thumb = document.createElement('div');
     thumb.className = 'mega-sub-thumb';
     if (sub.thumbnail) {

@@ -1,37 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import ProductsPage from '../components/ProductsPage.astro';
+import { useTranslations, DEFAULT_LOCALE } from '../i18n';
+import { getProductsByLang } from '../i18n/product';
 
-const allProducts = await getCollection('products');
-const productsData = allProducts.map(p => p.data);
+const lang = DEFAULT_LOCALE;
+const t = useTranslations(lang);
+const products = await getProductsByLang(lang);
 ---
-<BaseLayout title="所有商品 | Twinco" bodyClass="page-products" solidHeader={true}>
-  <main class="products-page">
-    <nav class="breadcrumb" id="breadcrumb" aria-label="面包屑导航">
-      <a href="/">首页</a>
-      <span class="breadcrumb-sep">/</span>
-      <a href="/products">所有商品</a>
-      <span class="breadcrumb-sep breadcrumb-cat-sep" style="display:none">/</span>
-      <span class="breadcrumb-cat" id="breadcrumbCat"></span>
-      <span class="breadcrumb-sep breadcrumb-sub-sep" style="display:none">/</span>
-      <span class="breadcrumb-sub" id="breadcrumbSub"></span>
-    </nav>
-
-    <div class="products-header" id="productsHeader">
-      <h1 class="products-title" id="productsTitle">所有商品</h1>
-      <p class="products-count" id="productsCount"></p>
-    </div>
-
-    <div class="product-grid" id="productGrid"></div>
-
-    <div class="products-empty" id="productsEmpty" style="display:none">
-      <p>暂无匹配的商品</p>
-      <a href="/products" class="products-empty-link">查看所有商品 →</a>
-    </div>
-  </main>
-
-  <script define:vars={{ productsData }}>
-    window.__PRODUCTS_DATA__ = productsData;
-  </script>
-  <script is:inline src="/scripts/products.js"></script>
+<BaseLayout title={t('products.pageTitle')} bodyClass="page-products" solidHeader={true} lang={lang}>
+  <ProductsPage lang={lang} products={products} />
 </BaseLayout>

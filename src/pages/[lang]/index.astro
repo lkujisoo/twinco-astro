@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomePage from '../../components/HomePage.astro';
+import { useTranslations, nonDefaultLocalePaths } from '../../i18n';
+
+export function getStaticPaths() {
+  return nonDefaultLocalePaths();
+}
+
+const { lang } = Astro.params as { lang: string };
+const t = useTranslations(lang);
+---
+<BaseLayout title={t('home.pageTitle')} lang={lang}>
+  <HomePage lang={lang} />
+</BaseLayout>

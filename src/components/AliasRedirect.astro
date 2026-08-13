@@ -1,0 +1,26 @@
+---
+/** 型号别名跳转页：/product/15003 → /product/15008（带语言前缀时同理） */
+interface Props {
+  target: string;
+  lang: string;
+}
+const { target, lang } = Astro.props;
+import { LOCALE_HTML_LANG } from '../i18n';
+---
+<!doctype html>
+<html lang={LOCALE_HTML_LANG[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={target} />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+    <p><a href={target}>Continue</a></p>
+  </body>
+</html>

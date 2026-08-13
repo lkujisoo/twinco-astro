@@ -1,60 +1,86 @@
 ---
 import '../styles/global.css';
+import { useTranslations, localizePath, getLocaleOptions, LOCALE_HTML_LANG, LOCALE_DIR, DEFAULT_LOCALE } from '../i18n';
+import { getCategories } from '../i18n/categories';
 
 interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
   solidHeader?: boolean;
+  lang?: string;
 }
 
-const { title, description = 'Twinco Furniture - Premium quality furniture for modern living', bodyClass = '', solidHeader = false } = Astro.props;
+const { title, description, bodyClass = '', solidHeader = false, lang = DEFAULT_LOCALE } = Astro.props;
+
+const t = useTranslations(lang);
+const p = (path: string) => localizePath(path, lang);
+const localeOptions = getLocaleOptions(lang, Astro.url.pathname);
+const metaDescription = description ?? t('meta.description');
+
+// 客户端脚本要用到的文案、语言和分类数据（products.js / product-detail.js / main.js）
+// 分类直接注入本语言版本，不再让客户端 fetch /data/categories.json，避免多语言下再维护一份副本
+const clientI18n = {
+  lang,
+  productsPath: p('/products'),
+  megaEmpty: t('mega.empty'),
+  productsCount: t('products.count'),
+  productsEmpty: t('products.empty'),
+  detailImagePending: t('detail.imagePending'),
+  detailFilterSummaryAll: t('detail.filterSummaryAll'),
+  home: t('common.home'),
+  allProducts: t('nav.products'),
+};
+const clientCategories = getCategories(lang);
 ---
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang={LOCALE_HTML_LANG[lang]} dir={LOCALE_DIR[lang]}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content={description}>
+  <meta name="description" content={metaDescription}>
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  {localeOptions.map((option) => (
+    <link rel="alternate" hreflang={option.lang} href={new URL(option.href, Astro.site ?? Astro.url).href} />
+  ))}
 </head>
 <body class={bodyClass}>
   <header class={`site-header ${solidHeader ? 'header-solid' : ''}`} id="siteHeader">
     <div class="header-inner">
-      <a href="/" class="logo">
+      <a href={p('/')} class="logo">
         <img src="/images/logo.png" alt="TWINCO" class="logo-img">
       </a>
       <nav class="main-nav">
-        <a href="/" class="nav-link">首页</a>
+        <a href={p('/')} class="nav-link">{t('nav.home')}</a>
         <button class="nav-link" id="productsToggle" aria-expanded="false" aria-controls="megaDropdown">
-          <span>所有商品</span>
+          <span>{t('nav.products')}</span>
           <svg class="nav-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none">
             <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
-        <a href="/about" class="nav-link">关于 Twinco</a>
+        <a href={p('/about')} class="nav-link">{t('nav.about')}</a>
       </nav>
       <div class="header-actions">
-        <button class="action-btn" id="searchToggle" aria-label="搜索">
+        <button class="action-btn" id="searchToggle" aria-label={t('header.searchLabel')}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
           </svg>
         </button>
         <div class="lang-switcher" id="langSwitcher">
-          <button class="action-btn lang-toggle" aria-label="切换语言" aria-expanded="false">
+          <button class="action-btn lang-toggle" aria-label={t('header.langLabel')} aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
           </button>
           <ul class="lang-dropdown" role="menu">
-            <li role="menuitem"><a href="#" data-lang="zh" class="active">中文</a></li>
-            <li role="menuitem"><a href="#" data-lang="en">English</a></li>
-            <li role="menuitem"><a href="#" data-lang="es">Español</a></li>
-            <li role="menuitem"><a href="#" data-lang="fr">Français</a></li>
-            <li role="menuitem"><a href="#" data-lang="ar">العربية</a></li>
+            {localeOptions.map((option) => (
+              <li role="menuitem">
+                <a href={option.href} hreflang={option.lang} data-lang={option.lang} class={option.active ? 'active' : ''}>{option.label}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
@@ -65,8 +91,8 @@ const { title, description = 'Twinco Furniture - Premium quality furniture for m
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
-        <input type="text" id="searchInput" placeholder="搜索产品..." autocomplete="off">
-        <button class="search-close" id="searchClose" aria-label="关闭搜索">&times;</button>
+        <input type="text" id="searchInput" placeholder={t('header.searchPlaceholder')} autocomplete="off">
+        <button class="search-close" id="searchClose" aria-label={t('header.searchClose')}>&times;</button>
       </div>
     </div>
 
@@ -74,7 +100,7 @@ const { title, description = 'Twinco Furniture - Premium quality furniture for m
       <div class="mega-inner">
         <ul class="mega-categories" id="megaCategories" role="list"></ul>
         <div class="mega-subcategories" id="megaSubcategories">
-          <p class="mega-hint">← 点击左侧分类查看子分类</p>
+          <p class="mega-hint">{t('mega.hint')}</p>
         </div>
       </div>
     </div>
@@ -85,23 +111,28 @@ const { title, description = 'Twinco Furniture - Premium quality furniture for m
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="/images/logo.png" alt="TWINCO" class="footer-logo-img">        <p class="footer-tagline">Premium Furniture Since 2010</p>
+        <img src="/images/logo.png" alt="TWINCO" class="footer-logo-img">        <p class="footer-tagline">{t('footer.tagline')}</p>
       </div>
       <div class="footer-contact">
-        <p>info@twinco.com</p>
-        <p>+86 XXX-XXXX-XXXX</p>
+        <p>info@twincosolution.dk</p>
+        <p>+45 78 77 35 87</p>
       </div>
       <div class="footer-links">
-        <a href="/about">关于我们</a>
-        <a href="/products">所有商品</a>
-        <a href="mailto:info@twinco.com">联系我们</a>
+        <a href={p('/about')}>{t('footer.about')}</a>
+        <a href={p('/products')}>{t('footer.products')}</a>
+        <a href={p('/contact')}>{t('footer.contact')}</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Twinco Furniture. All rights reserved.</p>
+      <p>{t('footer.copyright')}</p>
     </div>
   </footer>
 
+  <script is:inline define:vars={{ clientI18n, clientCategories }}>
+    window.__LANG__ = clientI18n.lang;
+    window.__I18N__ = clientI18n;
+    window.__CATEGORIES__ = clientCategories;
+  </script>
   <script is:inline src="/scripts/main.js"></script>
 </body>
 </html>

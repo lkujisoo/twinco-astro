@@ -1,0 +1,64 @@
+---
+import { useTranslations, localizePath, rawTranslation } from '../i18n';
+
+interface Props {
+  lang: string;
+  products: Record<string, any>[];
+}
+
+const { lang, products } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => localizePath(path, lang);
+
+// 卡片只用得到这几个字段，挑出来注入，避免把整份产品数据塞进 HTML
+const cards = products.map((item) => ({
+  id: item.id,
+  name: item.name,
+  nameRef: item.nameRef,
+  description: item.description,
+  material: item.material,
+  category: item.category,
+  subcategory: item.subcategory,
+  defaultImage: item.defaultImage,
+  colors: item.colors,
+  stepVariants: item.stepVariants,
+}));
+
+const clientStrings = {
+  allProducts: t('products.title'),
+  searchTitle: rawTranslation(lang, 'products.searchTitle'),
+  count: rawTranslation(lang, 'products.count'),
+  imageMissing: t('products.imageMissing'),
+  productPath: localizePath('/product', lang),
+  productsPath: p('/products'),
+};
+---
+<main class="products-page">
+  <nav class="breadcrumb" id="breadcrumb" aria-label={t('common.breadcrumbAria')}>
+    <a href={p('/')}>{t('common.home')}</a>
+    <span class="breadcrumb-sep">/</span>
+    <a href={p('/products')}>{t('nav.products')}</a>
+    <span class="breadcrumb-sep breadcrumb-cat-sep" style="display:none">/</span>
+    <span class="breadcrumb-cat" id="breadcrumbCat"></span>
+    <span class="breadcrumb-sep breadcrumb-sub-sep" style="display:none">/</span>
+    <span class="breadcrumb-sub" id="breadcrumbSub"></span>
+  </nav>
+
+  <div class="products-header" id="productsHeader">
+    <h1 class="products-title" id="productsTitle">{t('products.title')}</h1>
+    <p class="products-count" id="productsCount"></p>
+  </div>
+
+  <div class="product-grid" id="productGrid"></div>
+
+  <div class="products-empty" id="productsEmpty" style="display:none">
+    <p>{t('products.empty')}</p>
+    <a href={p('/products')} class="products-empty-link">{t('products.emptyLink')}</a>
+  </div>
+</main>
+
+<script define:vars={{ cards, clientStrings }}>
+  window.__PRODUCTS_DATA__ = cards;
+  window.__PRODUCTS_STRINGS__ = clientStrings;
+</script>
+<script is:inline src="/scripts/products.js"></script>

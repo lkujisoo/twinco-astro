@@ -1,0 +1,116 @@
+---
+import { useTranslations, localizePath } from '../i18n';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => localizePath(path, lang);
+
+const capabilities = [
+  { title: t('about.cap1Title'), text: t('about.cap1Text') },
+  { title: t('about.cap2Title'), text: t('about.cap2Text') },
+  { title: t('about.cap3Title'), text: t('about.cap3Text') },
+];
+
+const sections = [
+  { kicker: t('about.sec1Kicker'), title: t('about.sec1Title'), text: t('about.sec1Text') },
+  { kicker: t('about.sec2Kicker'), title: t('about.sec2Title'), text: t('about.sec2Text') },
+  { kicker: t('about.sec3Kicker'), title: t('about.sec3Title'), text: t('about.sec3Text') },
+  { kicker: t('about.sec4Kicker'), title: t('about.sec4Title'), text: t('about.sec4Text') },
+];
+---
+<main class="about-page">
+  <section class="about-hero" aria-labelledby="aboutHeroTitle">
+    <div class="about-hero-media">
+      <img src="/images/hero/hero-08-step-stools.webp" alt={t('about.heroAlt')} loading="eager" decoding="async" />
+    </div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <p class="about-kicker">{t('about.heroKicker')}</p>
+      <h1 id="aboutHeroTitle">{t('about.heroTitle')}</h1>
+      <p>{t('about.heroDesc')}</p>
+    </div>
+  </section>
+
+  <section class="about-intro" aria-label={t('about.overviewAria')}>
+    <div class="about-intro-copy">
+      <p class="about-kicker">{t('about.introKicker')}</p>
+      <h2>{t('about.introTitle')}</h2>
+    </div>
+    <div class="about-capability-grid">
+      {capabilities.map((item) => (
+        <article class="about-capability">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="about-detail" aria-label={t('about.detailAria')}>
+    {sections.map((section, index) => (
+      <article class={`about-detail-row ${index % 2 === 1 ? 'about-detail-row--alt' : ''}`}>
+        <div class="about-detail-label">
+          <p class="about-kicker">{section.kicker}</p>
+        </div>
+        <div class="about-detail-copy">
+          <h2>{section.title}</h2>
+          <p>{section.text}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="about-contact-band" aria-label={t('about.contactAria')}>
+    <div class="about-company">
+      <p class="about-kicker">{t('about.companyKicker')}</p>
+      <h2>{t('about.contactTitle')}</h2>
+      <address>
+        Søndergade 3C<br />
+        DK-4130 Viby Sj<br />
+        Denmark
+      </address>
+      <dl class="about-contact-list">
+        <div>
+          <dt>CVR</dt>
+          <dd>37381918</dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd><a href="mailto:info@twincosolution.dk">info@twincosolution.dk</a></dd>
+        </div>
+        <div>
+          <dt>Phone</dt>
+          <dd><a href="tel:+4578773587">+45 78 77 35 87</a></dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="about-hotline">
+      <p class="about-kicker">{t('about.hotlineKicker')}</p>
+      <h3>{t('about.hoursTitle')}</h3>
+      <dl class="about-hours">
+        <div>
+          <dt>{t('about.hoursMonThu')}</dt>
+          <dd>8:30 - 16:00</dd>
+        </div>
+        <div>
+          <dt>{t('about.hoursFri')}</dt>
+          <dd>8:30 - 15:30</dd>
+        </div>
+        <div>
+          <dt>{t('about.hoursSatSun')}</dt>
+          <dd>{t('about.hoursClosed')}</dd>
+        </div>
+      </dl>
+      <div class="about-actions">
+        <a href={p('/contact')}>{t('about.contactForm')}</a>
+        <a href="/files/twinco-catalogue-apr-2026.pdf" target="_blank" rel="noreferrer">{t('about.viewCatalogue')}</a>
+        <a href="/files/twinco-environment-data.pdf" target="_blank" rel="noreferrer">{t('about.envData')}</a>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactPage from '../components/ContactPage.astro';
+import { useTranslations, DEFAULT_LOCALE } from '../i18n';
+
+const lang = DEFAULT_LOCALE;
+const t = useTranslations(lang);
+---
+<BaseLayout
+  title={t('contact.pageTitle')}
+  description={t('contact.metaDescription')}
+  bodyClass="page-contact"
+  solidHeader={true}
+  lang={lang}
+>
+  <ContactPage lang={lang} />
+</BaseLayout>

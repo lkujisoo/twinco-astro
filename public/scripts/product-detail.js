@@ -1,3 +1,14 @@
+/** 页面按当前语言注入的文案（见 ProductDetailPage.astro） */
+function ds() {
+  return window.__DETAIL_STRINGS__ || {};
+}
+
+/** 填模板占位符 */
+function dsFill(template, params) {
+  if (!template) return '';
+  return template.replace(/\{(\w+)\}/g, (m, k) => (k in params ? String(params[k]) : m));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const colors = window.__PRODUCT_COLORS__ || [];
   const defaultImage = window.__DEFAULT_IMAGE__ || '';
@@ -46,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!variant) return null;
     if (colors.length && variant.colorImages) {
       const color = colors[colorIdx];
-      if (color && variant.colorImages[color.name]) return variant.colorImages[color.name];
+      const ck = color && (color.key || color.name);
+      if (color && variant.colorImages[ck]) return variant.colorImages[ck];
     }
     if (colors.length && colors[colorIdx] && colors[colorIdx].image) {
       return colors[colorIdx].image;
@@ -70,8 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!color) return '';
     if (stepVariants.length > 0) {
       const variant = stepVariants[activeVariantIdx];
-      if (variant && variant.colorSkus && variant.colorSkus[color.name]) {
-        return variant.colorSkus[color.name];
+      const ck2 = color.key || color.name;
+      if (variant && variant.colorSkus && variant.colorSkus[ck2]) {
+        return variant.colorSkus[ck2];
       }
     }
     return color.sku || '';
@@ -105,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!placeholder) {
         placeholder = document.createElement('div');
         placeholder.className = 'detail-main-placeholder highlight-image-placeholder';
-        placeholder.innerHTML = '<span>图片待补</span>';
+        placeholder.innerHTML = `<span>${ds().imagePending || ''}</span>`;
         mainImageEl.appendChild(placeholder);
       }
     }
@@ -132,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ph) {
           const newPh = document.createElement('div');
           newPh.className = 'detail-thumb-placeholder highlight-image-placeholder';
-          newPh.innerHTML = '<span>暂缺</span>';
+          newPh.innerHTML = `<span>${ds().imageMissing || ''}</span>`;
           btn.appendChild(newPh);
         }
       }
@@ -143,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const variant = stepVariants[variantIdx];
     if (!variant || !variant.colorImages) return true;
     const color = colors[colorIdx];
-    return color && !!variant.colorImages[color.name];
+    return color && !!variant.colorImages[color.key || color.name];
   }
 
   function syncColorsForVariant(variantIdx) {
@@ -208,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateSummary(visibleCount) {
       if (!summary) return;
       summary.textContent = activeFilters.size
-        ? `显示 ${visibleCount} 个匹配型号`
-        : `显示全部 ${cards.length} 个型号`;
+        ? dsFill(ds().filterSummaryMatch, { n: visibleCount })
+        : dsFill(ds().filterSummaryAllCount, { n: cards.length });
     }
 
     function applyFilters() {
@@ -409,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       const ph = document.createElement('div');
       ph.className = 'detail-thumb-placeholder highlight-image-placeholder';
-      ph.innerHTML = '<span>暂缺</span>';
+      ph.innerHTML = `<span>${ds().imageMissing || ''}</span>`;
       thumb.appendChild(ph);
     }
     thumb.addEventListener('mouseenter', () => selectColor(i));

@@ -1,0 +1,101 @@
+---
+import { useTranslations } from '../i18n';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const contactRows = [
+  [t('contact.labelAddress'), 'Søndergade 3C, DK-4130 Viby Sj, Denmark'],
+  [t('contact.labelEmail'), 'info@twincosolution.dk'],
+  [t('contact.labelPhone'), '+45 78 77 35 87'],
+  [t('contact.labelCvr'), '37381918'],
+];
+
+const openingHours = [
+  [t('about.hoursMonThu'), '8:30 - 16:00'],
+  [t('about.hoursFri'), '8:30 - 15:30'],
+  [t('about.hoursSatSun'), t('about.hoursClosed')],
+];
+
+const emailLabel = t('contact.labelEmail');
+---
+<main class="contact-page">
+  <section class="contact-hero" aria-labelledby="contactTitle">
+    <div>
+      <p class="contact-kicker">{t('contact.kicker')}</p>
+      <h1 id="contactTitle">{t('contact.title')}</h1>
+    </div>
+    <p>{t('contact.desc')}</p>
+  </section>
+
+  <section class="contact-content" aria-label={t('contact.formAria')}>
+    <form class="contact-form" action="mailto:info@twincosolution.dk" method="post" enctype="text/plain">
+      <div class="contact-form-grid">
+        <label class="contact-field">
+          <span>{t('contact.fieldName')} <abbr title={t('contact.required')}>*</abbr></span>
+          <input type="text" name="Name" required autocomplete="name" />
+        </label>
+
+        <label class="contact-field">
+          <span>{t('contact.fieldMail')} <abbr title={t('contact.required')}>*</abbr></span>
+          <input type="email" name="Mail" required autocomplete="email" />
+        </label>
+
+        <label class="contact-field">
+          <span>{t('contact.fieldSubject')} <abbr title={t('contact.required')}>*</abbr></span>
+          <input type="text" name="Subject" required />
+        </label>
+
+        <label class="contact-field contact-field--full">
+          <span>{t('contact.fieldMessage')} <abbr title={t('contact.required')}>*</abbr></span>
+          <textarea name="Message" rows="7" required></textarea>
+        </label>
+      </div>
+
+      <button class="contact-submit" type="submit">{t('contact.submit')}</button>
+    </form>
+
+    <aside class="contact-info" aria-label={t('contact.infoAria')}>
+      <section>
+        <p class="contact-kicker">{t('contact.companyKicker')}</p>
+        <dl class="contact-info-list">
+          {contactRows.map(([label, value]) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{label === emailLabel ? <a href="mailto:info@twincosolution.dk">{value}</a> : value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section>
+        <p class="contact-kicker">{t('contact.hoursKicker')}</p>
+        <dl class="contact-info-list">
+          {openingHours.map(([label, value]) => (
+            <div>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <div class="contact-resource-links">
+        <a href="/files/twinco-catalogue-apr-2026.pdf" target="_blank" rel="noreferrer">{t('contact.viewCatalogue')}</a>
+        <a href="/files/twinco-environment-data.pdf" target="_blank" rel="noreferrer">{t('contact.envData')}</a>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script is:inline>
+  const subject = new URLSearchParams(window.location.search).get('subject');
+  if (subject) {
+    const subjectInput = document.querySelector('.contact-form input[name="Subject"]');
+    if (subjectInput) subjectInput.value = subject;
+  }
+</script>

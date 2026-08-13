@@ -1,19 +1,21 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+/**
+ * 产品内容按语言分目录：src/content/products/{lang}/<id>.md
+ * 条目 id 形如 "zh/3177"、"en/3177"。
+ * 所有字段都不带语言后缀 —— 语言由所在目录决定。
+ */
 const products = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/products' }),
+  loader: glob({ pattern: '*/*.md', base: './src/content/products' }),
   schema: z.object({
     id: z.string(),
     name: z.string(),
-    nameEn: z.string(),
     subtitle: z.string().optional(),
     category: z.string(),
     subcategory: z.string(),
     description: z.string(),
-    descEn: z.string(),
     material: z.string(),
-    materialEn: z.string(),
     dimensions: z.string(),
     maxLoad: z.string().optional(),
     certifications: z.array(z.string()).optional(),
@@ -25,7 +27,6 @@ const products = defineCollection({
     defaultImage: z.string().optional(),
     colors: z.array(z.object({
       name: z.string(),
-      nameZh: z.string().optional(),
       hex: z.string(),
       image: z.string().optional(),
       imageHandrail: z.string().optional(),
@@ -56,11 +57,9 @@ const products = defineCollection({
     })).optional(),
     accessories: z.array(z.object({
       label: z.string(),
-      labelEn: z.string().optional(),
       sku: z.string(),
       image: z.string().optional(),
       description: z.string().optional(),
-      descriptionEn: z.string().optional(),
     })).optional(),
     gridVariants: z.object({
       columns: z.array(z.object({ label: z.string() })),
@@ -77,7 +76,6 @@ const products = defineCollection({
     optionProducts: z.array(z.object({
       id: z.string(),
       name: z.string(),
-      nameEn: z.string().optional(),
       subtitle: z.string().optional(),
       description: z.string(),
       material: z.string().optional(),
@@ -85,7 +83,6 @@ const products = defineCollection({
       defaultImage: z.string(),
       colors: z.array(z.object({
         name: z.string(),
-        nameEn: z.string().optional(),
         hex: z.string(),
         sku: z.string(),
         image: z.string(),
@@ -100,28 +97,21 @@ const products = defineCollection({
     highlights: z.array(z.object({
       image: z.string().optional(),
       title: z.string(),
-      titleZh: z.string().optional(),
       text: z.string(),
-      textZh: z.string().optional(),
     })).optional(),
     infoSections: z.array(z.object({
       title: z.string(),
-      titleEn: z.string().optional(),
       content: z.array(z.string()),
-      contentEn: z.array(z.string()).optional(),
     })).optional(),
     lifestyleImages: z.array(z.string()).optional(),
     detailImages: z.array(z.object({
       src: z.string(),
       caption: z.string().optional(),
-      captionEn: z.string().optional(),
     })).optional(),
     modelFilters: z.array(z.object({
       key: z.string(),
       label: z.string(),
-      labelEn: z.string().optional(),
       description: z.string().optional(),
-      descriptionEn: z.string().optional(),
     })).optional(),
     modelItems: z.array(z.object({
       sku: z.string(),
@@ -129,14 +119,12 @@ const products = defineCollection({
       image: z.string().optional(),
       tags: z.array(z.string()),
       description: z.string().optional(),
-      descriptionEn: z.string().optional(),
       dimensions: z.string().optional(),
     })).optional(),
     catalogPdf: z.string().optional(),
     catalogImages: z.array(z.object({
       src: z.string(),
       caption: z.string().optional(),
-      captionEn: z.string().optional(),
     })).optional(),
   }),
 });

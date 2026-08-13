@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductsPage from '../../components/ProductsPage.astro';
+import { useTranslations, nonDefaultLocalePaths } from '../../i18n';
+import { getProductsByLang } from '../../i18n/product';
+
+export function getStaticPaths() {
+  return nonDefaultLocalePaths();
+}
+
+const { lang } = Astro.params as { lang: string };
+const t = useTranslations(lang);
+const products = await getProductsByLang(lang);
+---
+<BaseLayout title={t('products.pageTitle')} bodyClass="page-products" solidHeader={true} lang={lang}>
+  <ProductsPage lang={lang} products={products} />
+</BaseLayout>

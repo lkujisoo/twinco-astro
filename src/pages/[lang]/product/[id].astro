@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProductDetailPage from '../../../components/ProductDetailPage.astro';
+import AliasRedirect from '../../../components/AliasRedirect.astro';
+import { ENABLED_LOCALES, DEFAULT_LOCALE, localizePath } from '../../../i18n';
+import { getProductsByLang } from '../../../i18n/product';
+import { PRODUCT_ALIASES } from '../../../data/product-aliases';
+
+export async function getStaticPaths() {
+  const langs = ENABLED_LOCALES.filter((l) => l !== DEFAULT_LOCALE);
+  const perLang = await Promise.all(
+    langs.map(async (lang) => ({ lang, products: await getProductsByLang(lang) }))
+  );
+  return perLang.flatMap(({ lang, products }) => [
+    ...products.map((product) => ({
+      params: { lang, id: product.id },
+      props: { product, aliasTarget: null as string | null },
+    })),
+    ...Object.entries(PRODUCT_ALIASES).map(([from, to]) => ({
+      params: { lang, id: from },
+      props: { product: null, aliasTarget: to },
+    })),
+  ]);
+}
+
+const { lang } = Astro.params as { lang: string };
+const { product, aliasTarget } = Astro.props;
+---
+{aliasTarget ? (
+  <AliasRedirect target={`${localizePath(`/product/${aliasTarget}`, lang)}/`} lang={lang} />
+) : (
+  <BaseLayout title={`${product.name} | Twinco`} bodyClass="page-product-detail" solidHeader={true} lang={lang}>
+    <ProductDetailPage lang={lang} product={product} />
+  </BaseLayout>
+)}

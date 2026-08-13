@@ -18,6 +18,14 @@ pnpm-debug.log*
 tmp/
 *.bak
 
+# 拆多语言目录前的旧扁平结构备份，只在本地留一份
+_backup_products_flat_before_i18n/
+# 已过期的翻译清单，现状见 工作日志/产品页面MD工作记录/I18N_MULTILANG.md
+TRANSLATION_TODO.md
+
+# 产品图册 352MB，超过 GitHub 单文件 100MB 上限，只在本地/部署环境放
+public/files/twinco-catalogue-apr-2026.pdf
+
 # editor settings
 .vscode/
 

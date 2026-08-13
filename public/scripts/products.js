@@ -2,22 +2,31 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProducts();
 });
 
+/** 页面按当前语言注入的文案与路径（见 ProductsPage.astro） */
+function strings() {
+  return window.__PRODUCTS_STRINGS__ || {};
+}
+
+/** 填模板占位符：fill('共 {n} 件商品', {n: 12}) */
+function fill(template, params) {
+  if (!template) return '';
+  return template.replace(/\{(\w+)\}/g, (m, k) => (k in params ? String(params[k]) : m));
+}
+
 async function loadProducts() {
+  const s = strings();
   const params = new URLSearchParams(window.location.search);
   const categoryId = params.get('category');
   const subId = params.get('sub');
   const search = params.get('search');
 
   const products = window.__PRODUCTS_DATA__ || [];
-  let categories = [];
-  try {
-    const resp = await fetch('/data/categories.json');
-    categories = await resp.json();
-  } catch (err) {}
+  // 分类由页面按语言注入，不再 fetch 静态 json
+  const categories = window.__CATEGORIES__ || [];
 
   let categoryName = '';
   let subName = '';
-  let pageTitle = '所有商品';
+  let pageTitle = s.allProducts || '';
 
   if (categoryId) {
     const cat = categories.find(c => c.id === categoryId);
@@ -25,12 +34,12 @@ async function loadProducts() {
       categoryName = cat.name;
       pageTitle = cat.name;
       if (subId) {
-        const sub = cat.subcategories.find(s => s.id === subId);
+        const sub = cat.subcategories.find(s2 => s2.id === subId);
         if (sub) { subName = sub.name; pageTitle = sub.name; }
       }
     }
   }
-  if (search) pageTitle = `搜索: "${search}"`;
+  if (search) pageTitle = fill(s.searchTitle, { q: search });
 
   updateBreadcrumb(categoryId, categoryName, subName);
   document.getElementById('productsTitle').textContent = pageTitle;
@@ -42,13 +51,13 @@ async function loadProducts() {
   if (search) {
     const q = search.toLowerCase();
     filtered = filtered.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.nameEn.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q)
+      (p.name || '').toLowerCase().includes(q) ||
+      (p.nameRef || '').toLowerCase().includes(q) ||
+      (p.description || '').toLowerCase().includes(q)
     );
   }
 
-  document.getElementById('productsCount').textContent = `${filtered.length} 件商品`;
+  document.getElementById('productsCount').textContent = fill(s.count, { n: filtered.length });
   const grid = document.getElementById('productGrid');
   const empty = document.getElementById('productsEmpty');
 
@@ -68,21 +77,23 @@ function getColorImage(product, color) {
   if (color.image) return color.image;
   const sv = product.stepVariants;
   if (sv && sv.length) {
-    if (sv[0].colorImages && sv[0].colorImages[color.name]) {
-      return sv[0].colorImages[color.name];
+    const ck = color.key || color.name;
+    if (sv[0].colorImages && sv[0].colorImages[ck]) {
+      return sv[0].colorImages[ck];
     }
     // Color not covered by the first variant (e.g. a color that only exists on
     // another step variant). Fall back to the variant/default image instead of
-    // flashing "暂缺", matching the detail page behavior.
+    // flashing the "no image" placeholder, matching the detail page behavior.
     if (sv[0].image) return sv[0].image;
   }
   return product.defaultImage || null;
 }
 
 function createProductCard(product, index) {
+  const s = strings();
   const card = document.createElement('a');
   card.className = 'product-card';
-  card.href = `/product/${product.id}`;
+  card.href = `${s.productPath || '/product'}/${product.id}`;
   card.style.animationDelay = `${index * 0.06}s`;
 
   const imgWrap = document.createElement('div');
@@ -107,7 +118,7 @@ function createProductCard(product, index) {
       if (!placeholder) {
         placeholder = document.createElement('div');
         placeholder.className = 'product-card-placeholder highlight-image-placeholder';
-        placeholder.innerHTML = '<span>暂缺</span>';
+        placeholder.innerHTML = `<span>${s.imageMissing || ''}</span>`;
         imgWrap.appendChild(placeholder);
       }
     }
@@ -119,7 +130,7 @@ function createProductCard(product, index) {
   } else {
     placeholder = document.createElement('div');
     placeholder.className = 'product-card-placeholder highlight-image-placeholder';
-    placeholder.innerHTML = '<span>暂缺</span>';
+    placeholder.innerHTML = `<span>${s.imageMissing || ''}</span>`;
     imgWrap.appendChild(placeholder);
   }
   card.appendChild(imgWrap);
@@ -169,7 +180,7 @@ function updateBreadcrumb(categoryId, categoryName, subName) {
       catSep.style.display = '';
       if (categoryId) {
         const link = document.createElement('a');
-        link.href = `/products?category=${encodeURIComponent(categoryId)}`;
+        link.href = `${strings().productsPath || '/products'}?category=${encodeURIComponent(categoryId)}`;
         link.textContent = categoryName;
         catEl.replaceWith(link);
       }
