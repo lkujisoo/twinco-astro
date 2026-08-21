@@ -4,8 +4,8 @@
     "name": "登高与安全踏凳系列",
     "nameEn": "Climbing & Safety Steps",
     "subcategories": [
-      { "id": "stepstool", "name": "Stepstools", "nameEn": "Stepstools", "thumbnail": "/images/products/6300/default.jpg" },
-      { "id": "aluminum-step-ladder", "name": "Aluminum Step Ladders", "nameEn": "Aluminum Step Ladders", "thumbnail": "/images/products/3028/default.png" },
+      { "id": "stepstool", "name": "Stepstools", "nameEn": "Stepstools", "thumbnail": "/images/categories/climbing-safety/stepstool.jpg" },
+      { "id": "aluminum-step-ladder", "name": "Aluminum Step Ladders", "nameEn": "Aluminum Step Ladders", "thumbnail": "/images/categories/climbing-safety/aluminum-step-ladder.jpg" },
       { "id": "metal-step-ladder", "name": "Metal Step Ladders", "nameEn": "Metal Step Ladders", "thumbnail": "/images/products/2029/default.jpg" },
       { "id": "heavy-duty-safety", "name": "Heavy Duty Safety Steps", "nameEn": "Heavy Duty Safety Steps", "thumbnail": "/images/products/6700/default.jpg" }
     ]
@@ -15,10 +15,10 @@
     "name": "人体工学座椅与脚踏系列",
     "nameEn": "Ergonomic Seating & Footrests",
     "subcategories": [
-      { "id": "footrest", "name": "Footrests", "nameEn": "Footrests", "thumbnail": "/images/products/3111/default.jpg" },
-      { "id": "wobble-stool", "name": "Wobble Stools", "nameEn": "Wobble Stools", "thumbnail": "/images/products/6131/6131-black.png" },
+      { "id": "footrest", "name": "Footrests", "nameEn": "Footrests", "thumbnail": "/images/categories/ergonomic-seating/footrest.jpg" },
+      { "id": "wobble-stool", "name": "Wobble Stools", "nameEn": "Wobble Stools", "thumbnail": "/images/categories/ergonomic-seating/wobble-stool.png" },
       { "id": "anti-fatigue-stool", "name": "Anti-fatigue Stools", "nameEn": "Anti-fatigue Stools", "thumbnail": "/images/products/6110/default.jpg" },
-      { "id": "task-chair", "name": "Ergonomic Task Chairs", "nameEn": "Ergonomic Task Chairs", "thumbnail": "/images/products/15008/15008.png" },
+      { "id": "task-chair", "name": "Ergonomic Task Chairs", "nameEn": "Ergonomic Task Chairs", "thumbnail": "/images/categories/ergonomic-seating/task-chair.png" },
       { "id": "ball-chair", "name": "Ball Chairs", "nameEn": "Ball Chairs", "thumbnail": "/images/products/4100/产品图.png" }
     ]
   },
@@ -38,9 +38,9 @@
     "name": "资料展示与广告陈列系列",
     "nameEn": "Literature & Advertising Displays",
     "subcategories": [
-      { "id": "literature-holder", "name": "Literature Holders", "nameEn": "Literature Holders", "thumbnail": "/images/products/5108/5108.png" },
+      { "id": "literature-holder", "name": "Literature Holders", "nameEn": "Literature Holders", "thumbnail": "/images/categories/display-rack/literature-holder.jpg" },
       { "id": "acrylic-display", "name": "Acrylic Displays", "nameEn": "Acrylic Displays", "thumbnail": "/images/products/5810/5810.png" },
-      { "id": "display-stand", "name": "Display Stands", "nameEn": "Display Stands", "thumbnail": "/images/products/5171/black.png" }
+      { "id": "display-stand", "name": "Display Stands", "nameEn": "Display Stands", "thumbnail": "/images/categories/display-rack/display-stand.png" }
     ]
   },
   {
@@ -48,7 +48,7 @@
     "name": "公共空间与设施用品系列",
     "nameEn": "Public Space & Facility",
     "subcategories": [
-      { "id": "poster-frame", "name": "Poster Frames", "nameEn": "Poster Frames", "thumbnail": "/images/products/5310/5311.png" },
+      { "id": "poster-frame", "name": "Poster Frames", "nameEn": "Poster Frames", "thumbnail": "/images/categories/public-space/poster-frame.png" },
       { "id": "waste-bin", "name": "Waste Bins", "nameEn": "Waste Bins", "thumbnail": "/images/products/2000/default.png" },
       { "id": "umbrella-stand", "name": "Umbrella Stands", "nameEn": "Umbrella Stands", "thumbnail": "/images/products/2025/2025-1.jpg" },
       { "id": "belt-barrier", "name": "Belt Barriers", "nameEn": "Belt Barriers", "thumbnail": "/images/products/3200/3200-1.jpg" },
@@ -66,7 +66,6 @@
       { "id": "letter-tray", "name": "Letter Tray Systems", "nameEn": "Letter Tray Systems", "thumbnail": "/images/products/2100/default.jpg" },
       { "id": "pen-tray", "name": "Pen Trays", "nameEn": "Pen Trays", "thumbnail": "/images/products/9040/9040-1.jpg" },
       { "id": "copyholder", "name": "Copyholders", "nameEn": "Copyholders", "thumbnail": "/images/products/7200/default.jpg" },
-      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "/images/products/14197/default.jpg" },
       { "id": "bookend", "name": "Bookends", "nameEn": "Bookends", "thumbnail": "/images/products/1281/default.png" }
     ]
   },
@@ -77,9 +76,9 @@
     "subcategories": [
       { "id": "cpu-holder", "name": "CPU Holders", "nameEn": "CPU Holders", "thumbnail": "/images/products/1202/default.jpg" },
       { "id": "keyboard-drawer", "name": "Keyboard Drawers", "nameEn": "Keyboard Drawers", "thumbnail": "/images/products/9060/9060-basic.jpg" },
-      { "id": "click-workstation", "name": "CLICK Workstations", "nameEn": "CLICK Workstations", "thumbnail": "/images/products/6810/default.jpg" },
+      { "id": "click-workstation", "name": "CLICK Workstations", "nameEn": "CLICK Workstations", "thumbnail": "/images/categories/computer-workstation/click-workstation.png" },
       { "id": "mobile-computer", "name": "Mobile Computer Stands", "nameEn": "Mobile Computer Stands", "thumbnail": "/images/products/6870/display-6870.jpg" },
-      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "/images/products/6650/display-6650.png" },
+      { "id": "portable-table", "name": "Portable Tables", "nameEn": "Portable Tables", "thumbnail": "/images/categories/computer-workstation/portable-table.jpg" },
       { "id": "laptop-stand", "name": "Laptop Stands", "nameEn": "Laptop Stands", "thumbnail": "/images/products/7310/default.png" }
     ]
   },
@@ -99,6 +98,7 @@
     "name": "线缆管理系列",
     "nameEn": "Cable Management",
     "subcategories": [
+      { "id": "cable-pipe", "name": "Cable Pipes", "nameEn": "Cable Pipes", "thumbnail": "/images/products/14197/default.jpg" },
       { "id": "cable-trough", "name": "Cable Troughs", "nameEn": "Cable Troughs", "thumbnail": "/images/products/1270/1270+71+72.jpg" }
     ]
   }

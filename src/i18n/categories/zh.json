@@ -32,7 +32,6 @@
   "desk-organization.letter-tray": "文件盘系统",
   "desk-organization.pen-tray": "笔盘",
   "desk-organization.copyholder": "文稿夹",
-  "desk-organization.cable-pipe": "理线管",
   "desk-organization.bookend": "书立",
   "computer-workstation": "电脑办公配件与移动工作站系列",
   "computer-workstation.cpu-holder": "主机托架",
@@ -47,5 +46,6 @@
   "transport-support.monitor-arm": "显示器支架",
   "transport-support.acoustic-partition": "隔音屏风",
   "cable-management": "线缆管理系列",
+  "cable-management.cable-pipe": "理线管",
   "cable-management.cable-trough": "线缆管理槽"
 }

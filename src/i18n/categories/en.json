@@ -32,7 +32,6 @@
   "desk-organization.letter-tray": "Letter Tray Systems",
   "desk-organization.pen-tray": "Pen Trays",
   "desk-organization.copyholder": "Copyholders",
-  "desk-organization.cable-pipe": "Cable Pipes",
   "desk-organization.bookend": "Bookends",
   "computer-workstation": "Computer Accessories & Mobile Workstations",
   "computer-workstation.cpu-holder": "CPU Holders",
@@ -47,5 +46,6 @@
   "transport-support.monitor-arm": "Monitor Arm Mount Stands",
   "transport-support.acoustic-partition": "Acoustic Partitions",
   "cable-management": "Cable Management",
+  "cable-management.cable-pipe": "Cable Pipes",
   "cable-management.cable-trough": "Cable Troughs"
 }
