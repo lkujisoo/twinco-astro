@@ -14,7 +14,7 @@ export const LOCALES = ['zh', 'en', 'fr', 'de', 'da', 'es', 'it', 'ja', 'ko'];
  * 规则：不做语言回退，翻译没做完的语言不生成页面、不出现在切换菜单里，
  * 避免出现中英混排的页面。翻完一种就往这里加一种。
  */
-export const ENABLED_LOCALES = ['zh', 'en'];
+export const ENABLED_LOCALES = ['zh', 'en', 'fr', 'de', 'es', 'it', 'da', 'ja', 'ko'];
 
 /** 语言在切换菜单里的显示名（用各自母语书写） */
 export const LOCALE_LABELS = {

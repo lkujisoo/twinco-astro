@@ -1,13 +1,20 @@
 import categoriesData from '../data/categories.json';
 import zh from './categories/zh.json';
 import en from './categories/en.json';
+import fr from './categories/fr.json';
+import de from './categories/de.json';
+import es from './categories/es.json';
+import it from './categories/it.json';
+import da from './categories/da.json';
+import ja from './categories/ja.json';
+import ko from './categories/ko.json';
 import type { Locale } from './index';
 
 /**
  * 分类结构（id、缩略图、层级）在 src/data/categories.json，
  * 分类名称按语言拆在 src/i18n/categories/{lang}.json，key 是 id 或 "大类id.子类id"。
  */
-const names: Record<string, Record<string, string>> = { zh, en };
+const names: Record<string, Record<string, string>> = { zh, en, fr, de, es, it, da, ja, ko };
 
 export interface LocalizedSubcategory {
   id: string;

@@ -1,6 +1,13 @@
 import { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, LOCALE_LABELS, LOCALE_HTML_LANG, LOCALE_DIR } from './locales.mjs';
 import zh from './ui/zh.json';
 import en from './ui/en.json';
+import fr from './ui/fr.json';
+import de from './ui/de.json';
+import es from './ui/es.json';
+import it from './ui/it.json';
+import da from './ui/da.json';
+import ja from './ui/ja.json';
+import ko from './ui/ko.json';
 
 export type Locale = string;
 
@@ -8,7 +15,7 @@ export type Locale = string;
  * 已翻译完成的界面字典。翻完一种语言就在这里 import 并登记一条，
  * 同时把语言代码加进 locales.mjs 的 ENABLED_LOCALES。
  */
-const dictionaries: Record<string, Record<string, string>> = { zh, en };
+const dictionaries: Record<string, Record<string, string>> = { zh, en, fr, de, es, it, da, ja, ko };
 
 export { DEFAULT_LOCALE, ENABLED_LOCALES, LOCALES, LOCALE_LABELS, LOCALE_HTML_LANG, LOCALE_DIR };
 
