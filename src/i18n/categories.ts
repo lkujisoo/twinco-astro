@@ -46,7 +46,9 @@ export function getCategories(lang: Locale): LocalizedCategory[] {
     subcategories: category.subcategories.map((sub) => ({
       id: sub.id,
       name: pick(`${category.id}.${sub.id}`),
-      thumbnail: sub.thumbnail ? `/images/category-thumbnails/${category.id}/${sub.id}.jpg` : undefined,
+      thumbnail: sub.id === 'plastic-cabinet' && sub.thumbnail
+        ? sub.thumbnail
+        : sub.thumbnail ? `/images/category-thumbnails/${category.id}/${sub.id}.jpg` : undefined,
     })),
   }));
 }

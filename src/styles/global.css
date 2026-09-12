@@ -436,7 +436,7 @@ img { max-width: 100%; display: block; }
 .detail-main-image { aspect-ratio: 1/1; background: #f2f3f5; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .detail-main-image img { width: 100%; height: 100%; object-fit: contain; padding: 40px; }
 .detail-placeholder-img { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--color-text-secondary); font-size: 14px; }
-.detail-thumbs { display: flex; gap: 8px; margin-top: 12px; }
+.detail-thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .detail-thumb { width: 72px; height: 72px; border-radius: 4px; overflow: hidden; border: 2px solid transparent; background: #f5f3ef; padding: 4px; transition: border-color 0.2s; cursor: pointer; }
 .detail-thumb.active { border-color: var(--color-accent); }
 .detail-thumb img { width: 100%; height: 100%; object-fit: contain; }

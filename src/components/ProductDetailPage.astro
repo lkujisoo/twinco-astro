@@ -14,6 +14,7 @@ const p = (path: string) => localizePath(path, lang);
 const categories = getCategories(lang);
 const cat = categories.find(c => c.id === product.category);
 const catName = cat ? cat.name : '';
+const isPlasticCabinet = product.subcategory === 'plastic-cabinet';
 
 // product-detail.js 用到的文案（带 {n} 的保留模板，由脚本自己填）
 const detailStrings = {
@@ -144,7 +145,7 @@ const detailStrings = {
           <div class="step-variant-toggles" id="stepVariantToggles">
             {product.stepVariants.map((v: any, i: number) => (
               <button class={`step-variant-btn ${i === 0 ? 'active' : ''}`} data-index={i}>
-                {v.label}
+                {isPlasticCabinet ? v.sku : v.label}
               </button>
             ))}
           </div>

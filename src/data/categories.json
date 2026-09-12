@@ -62,7 +62,7 @@
     "name": "办公收纳与桌面整理系列",
     "nameEn": "Office Storage & Desk Organization",
     "subcategories": [
-      { "id": "plastic-cabinet", "name": "Plastic Cabinets", "nameEn": "Plastic Cabinets", "thumbnail": "" },
+      { "id": "plastic-cabinet", "name": "Plastic Cabinets", "nameEn": "Plastic Cabinets", "thumbnail": "/images/products/6720/6720_01_black_RAL9005.png" },
       { "id": "letter-tray", "name": "Letter Tray Systems", "nameEn": "Letter Tray Systems", "thumbnail": "/images/products/2100/default.jpg" },
       { "id": "pen-tray", "name": "Pen Trays", "nameEn": "Pen Trays", "thumbnail": "/images/products/9040/9040-1.jpg" },
       { "id": "copyholder", "name": "Copyholders", "nameEn": "Copyholders", "thumbnail": "/images/products/7200/default.jpg" },
