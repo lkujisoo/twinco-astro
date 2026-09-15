@@ -34,6 +34,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const activeAddonKeys = new Set();
   const thumbButtons = [];
 
+  const COLOR_KEY_ALIASES = {
+    Black: ['黑色'],
+    White: ['白色'],
+    Silver: ['银色'],
+    Grey: ['灰色'],
+    Gray: ['灰色'],
+    'Dark grey': ['深灰色', '深灰'],
+    'Dark gray': ['深灰色', '深灰'],
+    'Light grey': ['浅灰色', '浅灰'],
+    'Light gray': ['浅灰色', '浅灰'],
+    Brown: ['棕色', '咖啡色'],
+    Blue: ['蓝色'],
+    Red: ['红色'],
+    Yellow: ['黄色'],
+    Green: ['绿色'],
+  };
+
+  function colorKeyCandidates(color) {
+    if (!color) return [];
+    const raw = [color.key, color.name, color.sku].filter(Boolean);
+    const expanded = raw.flatMap((key) => [key, ...(COLOR_KEY_ALIASES[key] || [])]);
+    return [...new Set(expanded)];
+  }
+
+  function lookupColorMap(map, color) {
+    if (!map || !color) return null;
+    for (const key of colorKeyCandidates(color)) {
+      if (Object.prototype.hasOwnProperty.call(map, key)) return map[key];
+    }
+    return null;
+  }
+
   function getAddonKey() {
     if (activeAddonKeys.size === 0) return '';
     return [...activeAddonKeys].sort().join('');
@@ -57,8 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!variant) return null;
     if (colors.length && variant.colorImages) {
       const color = colors[colorIdx];
-      const ck = color && (color.key || color.name);
-      if (color && variant.colorImages[ck]) return variant.colorImages[ck];
+      const mappedImage = lookupColorMap(variant.colorImages, color);
+      if (mappedImage) return mappedImage;
+      return variant.image;
     }
     if (colors.length && colors[colorIdx] && colors[colorIdx].image) {
       return colors[colorIdx].image;
@@ -82,9 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!color) return '';
     if (stepVariants.length > 0) {
       const variant = stepVariants[activeVariantIdx];
-      const ck2 = color.key || color.name;
-      if (variant && variant.colorSkus && variant.colorSkus[ck2]) {
-        return variant.colorSkus[ck2];
+      const mappedSku = variant && lookupColorMap(variant.colorSkus, color);
+      if (mappedSku) {
+        return mappedSku;
       }
     }
     return color.sku || '';
@@ -156,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const variant = stepVariants[variantIdx];
     if (!variant || !variant.colorImages) return true;
     const color = colors[colorIdx];
-    return color && !!variant.colorImages[color.key || color.name];
+    return !!lookupColorMap(variant.colorImages, color);
   }
 
   function syncColorsForVariant(variantIdx) {
